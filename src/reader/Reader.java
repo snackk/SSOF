@@ -8,6 +8,7 @@ public class Reader {
 
 	public static void main(String[] args) {
 		SQLManual sqlm = new SQLManual();
+		/**/
 		String line;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(args[0]));
