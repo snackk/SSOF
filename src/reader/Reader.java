@@ -78,19 +78,19 @@ public class Reader {
 				
 				//read entry points
 				String entryPoint = reader.getEntryPoint(line);
-				System.out.println(entryPoint);
+				System.out.println("Entry Point: " + entryPoint);
 				if(entryPoint != null)
 					reader.getEntryPoints().add(entryPoint);
 				
 				//read sensitive sinks
 				String sink = reader.getSink(line);
-				System.out.println(sink);
+				System.out.println("Sink: " + sink);
 				if(sink != null)
 					reader.getSinks().add(sink);
 				
 				//read validation functions
 				String validFunc = reader.getValidFunc(line);
-				System.out.println(validFunc);
+				System.out.println("Validation: " + validFunc);
 				if(validFunc != null)
 					reader.getValidFuncs().add(validFunc);
 			}
