@@ -9,12 +9,15 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class XMLParser {
 	private String _fileName = "Configs/SQLI.xml";
 	private ArrayList<String> _entryPoints = new ArrayList<String>();
 	private static Map<String, ArrayList<String>> _sinksAndValidators = new Hashtable<String, ArrayList<String>>();
+	
 	
 	public XMLParser(){
 		
@@ -24,17 +27,34 @@ public class XMLParser {
 		_fileName = fileName;
 	}
 	
-	public ArrayList<String> getEntryPoints(){
-		return _entryPoints;
+	
+	public String getEntryPoints(){
+		String built = "";
+		for(String s : _entryPoints){
+			if(built.equals(""))
+				built = s;
+			else built += "|" + s;
+		}
+		return built;
 	}
 	
 	private String getFileName(){
 		return _fileName;
 	}
 	
-	public Map<String, ArrayList<String>> getSinksAndValidators(){
-		return _sinksAndValidators;
+	public String getSinksAndValidators(){
+		String built = "";
+		Iterator<Entry<String, ArrayList<String>>> it = _sinksAndValidators.entrySet().iterator();
+		
+		while (it.hasNext()) {
+			  Entry<String, ArrayList<String>> entry = it.next();
+				if(built.equals(""))
+					built = entry.getKey();
+				else built += "|" + entry.getKey();
+		}
+		return built;
 	}
+
 	
 	public void parse(){
 		  try {
@@ -46,47 +66,34 @@ public class XMLParser {
 
 				doc.getDocumentElement().normalize();
 
-				System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
 				NodeList nList = doc.getElementsByTagName("ep");
-
-				System.out.println("----------------------------");
 
 				for (int temp = 0; temp < nList.getLength(); temp++) {
 
 					Node nNode = nList.item(temp);
 
-					System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 						Element eElement = (Element) nNode;
-						getEntryPoints().add(eElement.getAttribute("type"));
-						System.out.println("EP : " + eElement.getAttribute("type"));
+						_entryPoints.add(eElement.getAttribute("type"));
 					}
 				}
 				
 				nList = doc.getElementsByTagName("sink");
 
-				System.out.println("----------------------------");
-
 				for (int temp = 0; temp < nList.getLength(); temp++) {
 
 					Node nNode = nList.item(temp);
 
-					System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 						Element eElement = (Element) nNode;
-						System.out.println("EP : " + eElement.getAttribute("type"));
 						NodeList b = eElement.getElementsByTagName("sanitization");
 						ArrayList<String> san = new ArrayList<String>(); 
 						for(int c=0; c<b.getLength();c++){
 							san.add(eElement.getElementsByTagName("sanitization").item(c).getTextContent());
-							System.out.println("sanitization : " + eElement.getElementsByTagName("sanitization").item(c).getTextContent());
 						}
-						getSinksAndValidators().put(eElement.getAttribute("type"), san);
+						_sinksAndValidators.put(eElement.getAttribute("type"), san);
 					}
 				}				
 			    } catch (Exception e) {

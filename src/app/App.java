@@ -40,8 +40,8 @@ public class App {
 					line = inputLine;
 					
 					System.out.println(line + " N " + lineNr);/*DEBUG*/
-					ep = new SQLIEntryPoint(line);
-					sink = new SQLISink(line);
+					ep = new SQLIEntryPoint(line, a.getEntryPoints());
+					sink = new SQLISink(line, a.getSinksAndValidators());
 					
 					if(!sink.isSink())
 						sink = null;

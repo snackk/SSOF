@@ -4,10 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SQLIEntryPoint extends EntryPoint {
-
-	public SQLIEntryPoint(String inputText) {
-		super(inputText, "(\\$_GET|\\$_POST|\\$_COOKIE|\\$_REQUEST|"
-				+ "HTTP_GET_VARS|HTTP_POST_VARS|HTTP_COOKIE_VARS|HTTP_REQUEST_VARS)");		
+	
+	public SQLIEntryPoint(String inputText, String entryPoints) {
+		super(inputText, "(" + entryPoints + ")");
 	}
 
 	@Override

@@ -6,10 +6,6 @@ public abstract class EntryPoint {
 	private String _epVariable;
 	private String _epPattern;
 	private String _epElement;
-
-	
-	protected EntryPoint(){
-	}
 	
 	protected EntryPoint(String inputText, String patterns){
 		_inputText = inputText;

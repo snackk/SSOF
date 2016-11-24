@@ -5,9 +5,8 @@ import java.util.regex.Pattern;
 
 public class SQLISink extends Sink{
 
-	public SQLISink(String inputText) {
-		super(inputText, "(mysql_query|mysql_unbuffered_query!"
-				+ "mysqli_query|mysqli_real_query|mysqli_master_query|mysqli_multi_query|mysqli_stmt_execute)");
+	public SQLISink(String inputText, String sinks) {
+		super(inputText,"(" + sinks + ")");
 	}
 
 	@Override
