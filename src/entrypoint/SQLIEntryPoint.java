@@ -6,14 +6,12 @@ import java.util.regex.Pattern;
 public class SQLIEntryPoint extends EntryPoint {
 
 	public SQLIEntryPoint(String inputText, String entryPoints) {
-		super(inputText, "(" + entryPoints + ")");
+		super(inputText, entryPoints);
 	}
 
 	@Override
-	protected void parseEntryPoint() {/*try catch here
-	 	[0] -> variable side
-	 	[1] -> Entry point
-	 */
+	protected void parseEntryPoint() {
+		
 		String[] parsed = getInputText().split("=", 2);
 		setEpVariable(parsed[0]);
 		Pattern pattern = Pattern.compile(getPatterns());

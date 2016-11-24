@@ -32,9 +32,14 @@ public class XMLParser {
 	public String getEntryPoints(){
 		String built = "";
 		for(String s : _entryPoints){
-			if(built.equals(""))
-				built = s;
-			else built += "|" + s;
+			if(built.equals("")){
+				if(s.contains("$"))
+					built = "\\" + s;
+			}
+			else{
+				if(s.contains("$"))
+					built += "|\\" + s;
+			}
 		}
 		return built;
 	}

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <SQLI>
 	<EntryPoints>
-		<ep type="\\$_GET"></ep>
-		<ep type="\\$_POST"></ep>
-		<ep type="\\$_COOKIE"></ep>
-		<ep type="\\$_REQUEST"></ep>
+		<ep type="$_GET"></ep>
+		<ep type="$_POST"></ep>
+		<ep type="$_COOKIE"></ep>
+		<ep type="$_REQUEST"></ep>
 		<ep type="HTTP_GET_VARS"></ep>
 		<ep type="HTTP_POST_VARS"></ep>
 		<ep type="HTTP_COOKIE_VARS"></ep>

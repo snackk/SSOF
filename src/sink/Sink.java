@@ -6,10 +6,6 @@ public abstract class Sink {
 	private String _sinkPattern;
 	private String _firstArgument;/*Could be a variable or a query*/
 
-
-	protected Sink(){
-	}
-
 	protected Sink(String inputText, String patterns){
 		_inputText = inputText;
 		_patterns = patterns;

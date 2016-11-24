@@ -39,6 +39,7 @@ public abstract class EntryPoint {
 			return false;
 		else return true;
 	}
+	
 	protected void setEpElement(String epElement){
 		_epElement = epElement;
 	}
