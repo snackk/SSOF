@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
+import xml.*;
 
 import entrypoint.*;
 import sink.SQLISink;
@@ -26,7 +27,8 @@ public class App {
 	private static Boolean isSafe = true;
 	
 	public static void main(String[] args) {
-		
+		XMLParser a = new XMLParser();
+		a.parse();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(args[0]));
 			

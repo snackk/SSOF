@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<SQLI>
+	<EntryPoints>
+		<ep type="\\$_GET"></ep>
+		<ep type="\\$_POST"></ep>
+		<ep type="\\$_COOKIE"></ep>
+		<ep type="\\$_REQUEST"></ep>
+		<ep type="HTTP_GET_VARS"></ep>
+		<ep type="HTTP_POST_VARS"></ep>
+		<ep type="HTTP_COOKIE_VARS"></ep>
+		<ep type="HTTP_REQUEST_VARS"></ep>
+	</EntryPoints>
+	<Sinks>
+		<sink type="mysql_query">
+			<sanitization>mysql_escape_string</sanitization>
+			<sanitization>mysql_real_escape_string</sanitization> 
+		</sink>
+		<sink type="mysql_unbuffered_query">
+			<sanitization>mysql_escape_string</sanitization>
+			<sanitization>mysql_real_escape_string</sanitization> 
+		</sink>
+		<sink type="mysqli_query">
+			<sanitization>mysql_escape_string</sanitization>
+			<sanitization>mysql_real_escape_string</sanitization> 
+		</sink>
+		<sink type="mysqli_real_query">
+			<sanitization>mysql_escape_string</sanitization>
+			<sanitization>mysql_real_escape_string</sanitization> 
+		</sink>
+		<sink type="mysqli_master_query">
+			<sanitization>mysql_escape_string</sanitization>
+			<sanitization>mysql_real_escape_string</sanitization> 
+		</sink>		
+		<sink type="mysqli_multi_query">
+			<sanitization>mysql_escape_string</sanitization>
+			<sanitization>mysql_real_escape_string</sanitization> 
+		</sink>	
+		<sink type="mysqli_stmt_execute">
+			<sanitization>mysqli_stmt_bind_param</sanitization> 
+		</sink>					
+	</Sinks>
+</SQLI>
