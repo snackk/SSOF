@@ -4,9 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SQLISink extends Sink{
-
+	
 	public SQLISink(String inputText, String sinks) {
-		super(inputText,sinks);
+		super(inputText, sinks, "SQL Injection");
 	}
 
 	@Override
@@ -29,6 +29,11 @@ public class SQLISink extends Sink{
 
 		if(matcher.find())
 			setSinkPattern(matcher.group());
+	}
+
+	@Override
+	public String toString() {
+		return "A query that contains user input, not sanitized, is used on the method, '" + getSinkPattern() + "', this could lead to a SQL Injection.";
 	}
 
 }
