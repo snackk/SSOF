@@ -3,6 +3,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 
 import entrypoint.*;
 import sink.SQLISink;
@@ -18,6 +20,10 @@ public class App {
 	
 	private static ArrayList<Sink> sinks = new ArrayList<Sink>();
 	private static Sink sink = null;
+
+	private static Map<String, String> querys = new Hashtable<String, String>();
+	
+	private static Boolean isSafe = true;
 	
 	public static void main(String[] args) {
 		
@@ -32,33 +38,61 @@ public class App {
 					line = inputLine;
 					
 					System.out.println(line + " N " + lineNr);/*DEBUG*/
-					
+					ep = new SQLIEntryPoint(line);
 					sink = new SQLISink(line);
+					
 					if(!sink.isSink())
 						sink = null;
 					else sinks.add(sink);
-					/*
-					ep = new SQLIEntryPoint(line);
 					
 					if(!ep.isEntryPoint())
 						ep = null;
-					else eps.add(ep);*/
+					else eps.add(ep);
+					
+					if((ep == null) && (sink == null)){
+						if(inputLine.contains("=")){
+							String[] parsed = inputLine.split("=", 2);
+							querys.put(parsed[0], parsed[1]);
+						}
+					}
 				}else{
 					line += inputLine;
 					line = line.replace("\n", "").replace("\r", "");
-				}
-				
+				}	
 			}
 			
 			System.out.println("*/ DEBUG");/*DEBUG*/
+			
+			if(!sinks.isEmpty()){	/*May have vunerabilities*/
+				String query = "";
+				for(Sink s : sinks){
+					System.out.println("DEBUG SINK: First argument: " + s.getFirstArgument());
+					if(querys.containsKey(s.getFirstArgument())){
+						
+						query = querys.get(s.getFirstArgument());
+						System.out.println("CONTEM " + query);
+						for(EntryPoint e : eps){
+							if(query.contains(e.getEpVariable())){
+								System.out.println("Funcao nao segura");/*Chamar validador!*/
+								isSafe = false;
+							}
+						}
+					}
+				}
+			}
+			if(isSafe)
+				System.out.println("Funcao segura");
 			/*
 			for(EntryPoint e : eps){
 				System.out.println(e.toString());
-			}*/
+			}
 			
 			for(Sink e : sinks){
 				System.out.println(e.toString());
-			}
+			}*/
+			
+			
+			
 			br.close();
 		}catch(IOException e) {
 			System.err.println("An argument is needed!\nExample: java App sqli_01.txt");

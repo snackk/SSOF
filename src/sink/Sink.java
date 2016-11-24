@@ -4,7 +4,7 @@ public abstract class Sink {
 	private String _inputText;
 	private String _patterns;
 	private String _sinkPattern;
-	private String _possibleEP;
+	private String _firstArgument;/*Could be a variable or a query*/
 
 	
 	protected Sink(){
@@ -17,8 +17,8 @@ public abstract class Sink {
 	}
 
 	
-	protected String getPossibleEP(){
-		return _possibleEP;
+	public String getFirstArgument(){
+		return _firstArgument;
 	}
 	
 	protected String getInputText(){
@@ -40,8 +40,8 @@ public abstract class Sink {
 	}
 
 	
-	protected void setPossibleEP(String possibleEP){
-		_possibleEP = possibleEP;
+	protected void setPossibleEP(String firstArgument){
+		_firstArgument = firstArgument;
 	}
 	
 	protected void setSinkPattern(String sinkPattern){
@@ -52,6 +52,6 @@ public abstract class Sink {
 	protected abstract void parseSink();
 	
 	public final String toString(){
-		return "Sink " + getSinkPattern() + " & Possible Entry Point " + getPossibleEP();
+		return "Sink " + getSinkPattern() + " & Possible Entry Point " + getFirstArgument();
 	}
 }
