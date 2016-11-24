@@ -5,6 +5,7 @@ public abstract class EntryPoint {
 	private String _patterns;
 	private String _epVariable;
 	private String _epPattern;
+	private String _epElement;
 
 	
 	protected EntryPoint(){
@@ -17,25 +18,47 @@ public abstract class EntryPoint {
 	}
 
 	
-	public String getInputText(){
+	protected String getInputText(){
 		return _inputText;
 	}
 	
-	public String getPatterns(){
+	protected String getPatterns(){
 		return _patterns;
 	}
 	
-	public String getEpVariable(){
+	protected String getEpVariable(){
 		return _epVariable;
+	}
+	
+	protected String getEpPattern(){
+		return _epPattern;
+	}
+	
+	protected String getEpElement(){
+		return _epElement;
+	}
+	
+	public final Boolean isEntryPoint(){
+		if(getEpPattern() == null)	
+			return false;
+		else return true;
+	}
+	protected void setEpElement(String epElement){
+		_epElement = epElement;
+	}
+	
+	protected void setEpVariable(String epVariable){
+		_epVariable = epVariable;
 	}
 	
 	protected void setEpPattern(String epPattern){
 		_epPattern = epPattern;
 	}
 	
-	public String getEpPattern(){
-		return _epPattern;
-	}
 	
 	protected abstract void parseEntryPoint();
+	
+	public final String toString(){
+		return "Variable " + getEpVariable() + " & Pattern " + getEpPattern();
+	}
 }

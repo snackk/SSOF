@@ -11,9 +11,14 @@ public class SQLIEntryPoint extends EntryPoint {
 	}
 
 	@Override
-	protected void parseEntryPoint() {
+	protected void parseEntryPoint() {/*try catch here
+	 	[0] -> variable side
+	 	[1] -> Entry point
+	 	*/
+		String[] parsed = getInputText().split("=", 2);
+		setEpVariable(parsed[0]);
 	    Pattern pattern = Pattern.compile(getPatterns());
-	    Matcher matcher = pattern.matcher(getInputText());
+	    Matcher matcher = pattern.matcher(parsed[1]);
 
         if(matcher.find())
         	setEpPattern(matcher.group());
