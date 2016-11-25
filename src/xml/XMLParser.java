@@ -1,11 +1,5 @@
 package xml;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -13,15 +7,18 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 public class XMLParser {
-	private String _fileName = "Configs/SQLI.xml";
+	private String _fileName;
 	private ArrayList<String> _entryPoints = new ArrayList<String>();
 	private static Map<String, ArrayList<String>> _sinksAndValidators = new Hashtable<String, ArrayList<String>>();
-
-
-	public XMLParser(){
-		parse();
-	}
 
 	public XMLParser(String fileName){
 		_fileName = fileName;
@@ -48,7 +45,7 @@ public class XMLParser {
 		return _fileName;
 	}
 
-	public String getSinksAndValidators(){
+	public String getSinks(){
 		String built = "";
 		Iterator<Entry<String, ArrayList<String>>> it = _sinksAndValidators.entrySet().iterator();
 
@@ -59,6 +56,10 @@ public class XMLParser {
 			else built += "|" + entry.getKey();
 		}
 		return built;
+	}
+	
+	public String getValidator(String sink){
+		return _sinksAndValidators.get(sink).get(0);
 	}
 
 

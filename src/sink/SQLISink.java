@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class SQLISink extends Sink{
 	
 	public SQLISink(String inputText, String sinks) {
-		super(inputText, sinks, "SQL Injection");
+		super(inputText, sinks);
 	}
 
 	@Override

@@ -3,113 +3,86 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Map;
-import xml.*;
 
-import entrypoint.*;
-import sink.SQLISink;
-import sink.Sink;
+import knownexploit.KnownExploit;
+import knownexploit.SQLI;
+import knownexploit.XSS;
 
-public class App {
-	private static XMLParser xmlParser = new XMLParser();
+public class App {	
+	public static String inputLine = "";
+	public static ArrayList<String> fileLines = new ArrayList<String>();;
 	
-	private static String inputLine = "";
-	private static String line = "";
-
-	private static ArrayList<EntryPoint> eps = new ArrayList<EntryPoint>();
-	private static EntryPoint ep = null;
-
-	private static ArrayList<Sink> sinks = new ArrayList<Sink>();
-	private static Sink sink = null;
-
-	private static Map<String, String> querys = new Hashtable<String, String>();
-
-	private static Boolean isSafe = true;
-	private static Boolean isTextOverflow = false;
-	
-	
-	public static Boolean isComplete(String test){
-		if(test.charAt(inputLine.length() - 1) == ";".charAt(0))
-			return true;
-		else return false;
-	}
+	private static ArrayList<KnownExploit> _KnownExploits = new ArrayList<KnownExploit>();	
 	
 	public static void main(String[] args) {
 		
 		if(args.length == 0){
-			System.err.println("An argument is needed!\nExample: java App sqli_01.txt");
+			System.err.println("An argument is needed!\nExample: java App sqli_01.txt sqli_02.txt");
 			return;
 		}
 		
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(args[0]));
-
-			while ((inputLine = br.readLine()) != null) {
-				if(isComplete(inputLine)){
-					if(isTextOverflow){
-						line += inputLine;
-						line = line.replace("\n", "").replace("\r", "");
-					}else line = inputLine;
-					
-					
-					ep = new SQLIEntryPoint(line, xmlParser.getEntryPoints());
-					sink = new SQLISink(line, xmlParser.getSinksAndValidators());
-
-					if(!sink.isSink())
-						sink = null;
-					else sinks.add(sink);
-
-					if(!ep.isEntryPoint())
-						ep = null;
-					else eps.add(ep);
-
-					if((ep == null) && (sink == null)){
-						if(line.contains("=")){
-							String[] parsed = line.split("=", 2);
-							querys.put(parsed[0], parsed[1]);
-						}
-					}
-					line = "";
-					isTextOverflow = false;
-				}else{
-					isTextOverflow = true;
-					line += inputLine;
-					line = line.replace("\n", "").replace("\r", "");
-				}	
-			}
-
-			if(!sinks.isEmpty()){	/*May have vunerabilities*/
-				String query = "";
+		for(int i=0; i<args.length; i++){
+			System.out.println("_________________________\n");
+			System.err.println("Running test '" + args[i] + "'");
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(args[i]));
 				
-				for(Sink s : sinks){
-					
-					if(querys.containsKey(s.getFirstArgument())){
-						query = querys.get(s.getFirstArgument());
-						
-						for(EntryPoint e : eps){
-							
-							if(query.contains(e.getEpVariable())){
-								isSafe = false;
-								
-								System.err.println("Program slice has a vunerability of type " + s.getSinkType() + ".");
-								System.err.println(s.toString());
-								System.err.println("Variable with user input: '" + e.getEpVariable() + "', and the query: " + query);
-								System.err.println("Fix: ");
-								
-							}
-						}
+				while ((inputLine = br.readLine()) != null) {
+					fileLines.add(inputLine);
+				}
+				br.close();
+				
+				handleFileText();
+				
+				_KnownExploits.add(new SQLI(fileLines));
+				_KnownExploits.add(new XSS(fileLines));
+				
+				Boolean isVunerable = false;
+				
+				for(KnownExploit ke : _KnownExploits){
+					if(ke.testVunerability()){
+						System.out.println(ke.getVunerabilityIntel());
+						isVunerable = true;
+						break;
 					}
 				}
+				
+				_KnownExploits.clear();
+				fileLines.clear();				
+				
+				if(!isVunerable)
+					System.out.println("Program slice doesn't contain any type of known vunerability.");
+	
+			}catch(IOException e) {
+				System.err.println("Couldn't read the file. Does it exist in the filesystem?");
 			}
-			br.close();
-			
-			if(isSafe)
-				System.out.println("Program slice doesn't contain any type of vunerability.");
-
-			
-		}catch(IOException e) {
-			System.err.println("Couldn't read the file. Does it exist in the filesystem?");
 		}
+	}
+	
+	
+	public static ArrayList<KnownExploit> getKnownExploits(){
+		return App._KnownExploits;
+	}
+		
+	
+	public static Boolean isComplete(String test){
+		if((test.charAt(test.length() - 1) == ";".charAt(0)) || (test.charAt(test.length() - 1) == ">".charAt(0)))
+			return true;
+		else return false;
+	}
+	
+	private static void handleFileText(){
+		ArrayList<String> auxFileLines = new ArrayList<String>();
+		String aux = "";
+		for(String line : fileLines){
+			if(isComplete(aux + line)){
+				auxFileLines.add(aux + line);
+				aux = "";
+			}else{
+				aux += line;
+				aux = aux.replace("\n", "").replace("\r", "");
+			}
+		}
+		fileLines = auxFileLines;
 	}
 }
