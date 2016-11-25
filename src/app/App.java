@@ -22,39 +22,44 @@ public class App {
 		}
 		
 		for(int i=0; i<args.length; i++){
-			System.out.println("_________________________\n");
-			System.err.println("Running test '" + args[i] + "'");
-			try {
-				BufferedReader br = new BufferedReader(new FileReader(args[i]));
-				
-				while ((inputLine = br.readLine()) != null) {
-					fileLines.add(inputLine);
-				}
-				br.close();
-				
-				handleFileText();
-				
-				_KnownExploits.add(new SQLI(fileLines));
-				_KnownExploits.add(new XSS(fileLines));
-				
-				Boolean isVunerable = false;
-				
-				for(KnownExploit ke : _KnownExploits){
-					if(ke.testVunerability()){
-						System.out.println(ke.getVunerabilityIntel());
-						isVunerable = true;
-						break;
+			if(args[i].equals("-ansiColor=true"))
+				System.out.println("cor");												/*TODO ansi colors here!*/
+			
+			else{
+				System.out.println("_________________________\n");
+				System.err.println("Running program slice '" + args[i] + "'");
+				try {
+					BufferedReader br = new BufferedReader(new FileReader(args[i]));
+					
+					while ((inputLine = br.readLine()) != null) {
+						fileLines.add(inputLine);
 					}
+					br.close();
+					
+					handleFileText();
+					
+					_KnownExploits.add(new SQLI(fileLines));
+					_KnownExploits.add(new XSS(fileLines));
+					
+					Boolean isVunerable = false;
+					
+					for(KnownExploit ke : _KnownExploits){
+						if(ke.testVunerability()){
+							System.out.println(ke.getVunerabilityIntel());
+							isVunerable = true;
+							break;
+						}
+					}
+					
+					_KnownExploits.clear();
+					fileLines.clear();				
+					
+					if(!isVunerable)
+						System.out.println("Program slice doesn't contain any type of known vunerability.");
+		
+				}catch(IOException e) {
+					System.err.println("Couldn't read the file. Does it exist in the filesystem?");
 				}
-				
-				_KnownExploits.clear();
-				fileLines.clear();				
-				
-				if(!isVunerable)
-					System.out.println("Program slice doesn't contain any type of known vunerability.");
-	
-			}catch(IOException e) {
-				System.err.println("Couldn't read the file. Does it exist in the filesystem?");
 			}
 		}
 	}
