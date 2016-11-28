@@ -10,7 +10,18 @@ import knownexploit.XSS;
 
 public class App {	
 	public static String inputLine = "";
-	public static ArrayList<String> fileLines = new ArrayList<String>();;
+	public static ArrayList<String> fileLines = new ArrayList<String>();
+	public static Boolean ansiColors = false;
+	
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_BLACK = "\u001B[30m";
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_WHITE = "\u001B[37m";
 	
 	private static ArrayList<KnownExploit> _KnownExploits = new ArrayList<KnownExploit>();	
 	
@@ -22,12 +33,12 @@ public class App {
 		}
 		
 		for(int i=0; i<args.length; i++){
-			if(args[i].equals("-ansiColor=true"))
-				System.out.println("cor");												/*TODO ansi colors here!*/
+			if(args[i].toLowerCase().equals("-ansicolor=true"))
+				ansiColors = true;												
 			
 			else{
 				System.out.println("_________________________\n");
-				System.err.println("Running program slice '" + args[i] + "'");
+				System.err.println("Running program slice '" + args[i] + "'\n");
 				try {
 					BufferedReader br = new BufferedReader(new FileReader(args[i]));
 					
