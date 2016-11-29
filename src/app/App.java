@@ -1,7 +1,9 @@
 package app;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import knownexploit.KnownExploit;
@@ -40,7 +42,9 @@ public class App {
 				System.out.println("_________________________\n");
 				System.err.println("Running program slice '" + args[i] + "'\n");
 				try {
-					BufferedReader br = new BufferedReader(new FileReader(args[i]));
+					File file = new File(args[i]);
+					//System.out.println("cano"+file.getCanonicalPath());
+					BufferedReader br = new BufferedReader(new FileReader(file));					
 					
 					while ((inputLine = br.readLine()) != null) {
 						fileLines.add(inputLine);
