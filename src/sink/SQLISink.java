@@ -30,5 +30,4 @@ public class SQLISink extends Sink{
 	public String toString() {
 		return "Query stored on '" + getFirstArgument() + "', this could lead to a SQL Injection.";
 	}
-
 }

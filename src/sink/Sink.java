@@ -35,7 +35,7 @@ public abstract class Sink {
 	}
 
 
-	protected void setPossibleEP(String firstArgument){
+	public void setPossibleEP(String firstArgument){
 		_firstArgument = firstArgument;
 	}
 

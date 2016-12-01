@@ -14,7 +14,7 @@ public abstract class EntryPoint {
 	}
 
 
-	protected String getInputText(){
+	public String getInputText(){
 		return _inputText;
 	}
 
@@ -44,7 +44,7 @@ public abstract class EntryPoint {
 		_entryPoint = ep;
 	}
 
-	protected void setVariable(String variable){
+	public void setVariable(String variable){
 		_varible = variable;
 	}
 
