@@ -21,7 +21,7 @@ public class SQLIXmlParser extends XMLParser {
 	
 	@Override
 	public String getValidator(String sink){
-		return getSinksAndValidatorsAsMap().get(sink).get(0);
+		return getSinksAndValidatorsAsMap().get(sink).get(1);/*1 is priority*/
 	}
 	
 	@Override
