@@ -1,7 +1,7 @@
 all:
 	javac `find . -name "*.java"`
 run:
-	java app.App -ansiColor=true sqli_01.txt sqli_02.txt sqli_03.txt sqli_04.txt sqli_05.txt
+	java app.App -ansiColor=true tests/sqli_01.txt tests/sqli_02.txt tests/sqli_03.txt tests/sqli_04.txt tests/sqli_05.txt
 clean:
 	rm -rf `find . -name "*.class"`
 jar:
