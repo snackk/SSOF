@@ -12,28 +12,28 @@
 	</EntryPoints>
 	<Sinks>
 		<sink type="mysql_query">
+			<sanitization>mysql_real_escape_string</sanitization> 		
 			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
 		</sink>
 		<sink type="mysql_unbuffered_query">
+			<sanitization>mysql_real_escape_string</sanitization> 		
 			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
 		</sink>
 		<sink type="mysqli_query">
+			<sanitization>mysql_real_escape_string</sanitization> 		
 			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
 		</sink>
 		<sink type="mysqli_real_query">
+			<sanitization>mysql_real_escape_string</sanitization> 		
 			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
 		</sink>
 		<sink type="mysqli_master_query">
+			<sanitization>mysql_real_escape_string</sanitization> 		
 			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
 		</sink>		
 		<sink type="mysqli_multi_query">
+			<sanitization>mysql_real_escape_string</sanitization> 		
 			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
 		</sink>	
 		<sink type="mysqli_stmt_execute">
 			<sanitization>mysqli_stmt_bind_param</sanitization> 

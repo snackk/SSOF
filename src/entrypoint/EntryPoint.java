@@ -26,7 +26,7 @@ public abstract class EntryPoint {
 		return _varible;
 	}
 
-	protected String getEpPattern(){
+	public String getEpPattern(){
 		return _epPattern;
 	}
 

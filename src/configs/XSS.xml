@@ -9,34 +9,58 @@
 		<ep type="HTTP_POST_VARS"></ep>
 		<ep type="HTTP_COOKIE_VARS"></ep>
 		<ep type="HTTP_REQUEST_VARS"></ep>
+		<ep type="$_FILES"></ep>
+		<ep type="$_SERVERS"></ep>
 	</EntryPoints>
 	<Sinks>
-		<sink type="mysql_query">
-			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
+		<sink type="echo">
+			<sanitization>san_out</sanitization>
+			<sanitization>htmlentities</sanitization> 
+			<sanitization>htmlspecialchars</sanitization> 
+			<sanitization>strip_tags</sanitization> 
+			<sanitization>urlencode</sanitization> 
 		</sink>
-		<sink type="mysql_unbuffered_query">
-			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
+		<sink type="print">
+			<sanitization>san_out</sanitization>
+			<sanitization>htmlentities</sanitization> 
+			<sanitization>htmlspecialchars</sanitization> 
+			<sanitization>strip_tags</sanitization> 
+			<sanitization>urlencode</sanitization> 
 		</sink>
-		<sink type="mysqli_query">
-			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
+		<sink type="die">
+			<sanitization>san_out</sanitization>
+			<sanitization>htmlentities</sanitization> 
+			<sanitization>htmlspecialchars</sanitization> 
+			<sanitization>strip_tags</sanitization> 
+			<sanitization>urlencode</sanitization> 
 		</sink>
-		<sink type="mysqli_real_query">
-			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
+		<sink type="error">
+			<sanitization>san_out</sanitization>
+			<sanitization>htmlentities</sanitization> 
+			<sanitization>htmlspecialchars</sanitization> 
+			<sanitization>strip_tags</sanitization> 
+			<sanitization>urlencode</sanitization> 
 		</sink>
-		<sink type="mysqli_master_query">
-			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
+		<sink type="exit">
+			<sanitization>san_out</sanitization>
+			<sanitization>htmlentities</sanitization> 
+			<sanitization>htmlspecialchars</sanitization> 
+			<sanitization>strip_tags</sanitization> 
+			<sanitization>urlencode</sanitization> 
 		</sink>		
-		<sink type="mysqli_multi_query">
-			<sanitization>mysql_escape_string</sanitization>
-			<sanitization>mysql_real_escape_string</sanitization> 
+		<sink type="file_put_contents">
+			<sanitization>san_wdata</sanitization>
+			<sanitization>htmlentities</sanitization> 
+			<sanitization>htmlspecialchars</sanitization> 
+			<sanitization>strip_tags</sanitization> 
+			<sanitization>urlencode</sanitization> 
 		</sink>	
-		<sink type="mysqli_stmt_execute">
-			<sanitization>mysqli_stmt_bind_param</sanitization> 
+		<sink type="file_get_contents">
+			<sanitization>san_rdata</sanitization>
+			<sanitization>htmlentities</sanitization> 
+			<sanitization>htmlspecialchars</sanitization> 
+			<sanitization>strip_tags</sanitization> 
+			<sanitization>urlencode</sanitization> 
 		</sink>					
 	</Sinks>
 </XSS>
