@@ -33,7 +33,7 @@ public class SQLISink extends Sink{
 
 	@Override
 	public String toString() {
-		return "A query that contains user input, not sanitized, is used on the method, '" + getSinkPattern() + "', this could lead to a SQL Injection.";
+		return "Query stored on '" + getFirstArgument() + "', this could lead to a SQL Injection.";
 	}
 
 }

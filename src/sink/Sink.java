@@ -4,7 +4,7 @@ public abstract class Sink {
 	private String _inputText;
 	private String _patterns;
 	private String _sinkPattern;
-	private String _firstArgument;/*Could be a variable or a query*/
+	private String _firstArgument;
 
 	protected Sink(String inputText, String patterns){
 		_inputText = inputText;

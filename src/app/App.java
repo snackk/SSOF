@@ -12,7 +12,10 @@ import knownexploit.XSS;
 public class App {	
 	public static String inputLine = "";
 	public static ArrayList<String> fileLines = new ArrayList<String>();
+	
 	public static Boolean ansiColors = false;
+	public static Boolean isSqli = false;
+	public static Boolean isXss = false;
 	
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
@@ -24,65 +27,62 @@ public class App {
 	public static final String ANSI_CYAN = "\u001B[36m";
 	public static final String ANSI_WHITE = "\u001B[37m";
 	
-	private static ArrayList<KnownExploit> _KnownExploits = new ArrayList<KnownExploit>();	
+	private static KnownExploit _KnownExploit = null;
 	
 	public static void main(String[] args) {
 		
 		if(args.length == 0){
-			System.err.println("An argument is needed!\nExample: java App sqli_01.txt sqli_02.txt");
+			System.err.println("An argument is needed!\nExample: java App -sqli tests/sqli_01.txt ");
 			return;
 		}
 		
 		for(int i=0; i<args.length; i++){
-			if(args[i].toLowerCase().equals("-ansicolor=true"))
-				ansiColors = true;												
-			
-			else{
-				System.out.println("_________________________\n");
-				System.err.println("Running program slice '" + args[i] + "'\n");
-				try {
-					File file = new File(args[i]);
-					//System.out.println("cano"+file.getCanonicalPath());
-					BufferedReader br = new BufferedReader(new FileReader(file));					
-					
-					while ((inputLine = br.readLine()) != null) {
-						fileLines.add(inputLine);
-					}
-					br.close();
-					
-					handleFileText();
-					
-					_KnownExploits.add(new SQLI(fileLines));
-					_KnownExploits.add(new XSS(fileLines));
-					
-					Boolean isVunerable = false;
-					
-					for(KnownExploit ke : _KnownExploits){
-						if(ke.testVunerability()){
-							System.out.println(ke.getVunerabilityIntel());
-							isVunerable = true;
-							break;
-						}
-					}
-					
-					_KnownExploits.clear();
-					fileLines.clear();				
-					
-					if(!isVunerable)
-						System.out.println("Program slice doesn't contain any type of known vunerability.");
-		
-				}catch(IOException e) {
-					System.err.println("Couldn't read the file. Does it exist in the filesystem?");
-				}
+			if(args[i].toLowerCase().equals("-ansicolor=true")){
+				ansiColors = true;
+				continue;
+			}if(args[i].toLowerCase().equals("-sqli")){
+				isSqli = true;
+				continue;
+			}if(args[i].toLowerCase().equals("-xss")){
+				isXss = true;	
+				continue;
 			}
+			System.out.println("_________________________\n");
+			System.err.println("Running program slice '" + args[i] + "'\n");
+			try {
+				File file = new File(args[i]);
+				BufferedReader br = new BufferedReader(new FileReader(file));					
+				
+				while ((inputLine = br.readLine()) != null) {
+					fileLines.add(inputLine);
+				}
+				br.close();
+				
+				handleFileText();
+				if(isSqli)
+					_KnownExploit = new SQLI(fileLines);
+				if(isXss)
+					_KnownExploit = new XSS(fileLines);
+				
+				Boolean isVunerable = false;
+				
+				if(_KnownExploit.isVunerable()){
+					System.out.println(_KnownExploit.getVunerabilityIntel());
+					isVunerable = true;
+				}
+				
+				_KnownExploit = null;
+				fileLines.clear();				
+				
+				if(!isVunerable)
+					System.out.println("Program slice doesn't contain any type of known vunerability.");
+	
+			}catch(IOException e) {
+				System.err.println("Couldn't read the file. Does it exist in the filesystem?");
+			}
+			
 		}
-	}
-	
-	
-	public static ArrayList<KnownExploit> getKnownExploits(){
-		return App._KnownExploits;
-	}
-		
+	}		
 	
 	public static Boolean isComplete(String test){
 		if((test.charAt(test.length() - 1) == ";".charAt(0)) || (test.charAt(test.length() - 1) == ">".charAt(0)))
