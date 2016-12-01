@@ -3,9 +3,9 @@ package entrypoint;
 public abstract class EntryPoint {
 	private String _inputText;
 	private String _patterns;
-	private String _epVariable;
+	private String _varible;
+	private String _entryPoint;	
 	private String _epPattern;
-	private String _epElement;
 
 	protected EntryPoint(String inputText, String patterns){
 		_inputText = inputText;
@@ -22,16 +22,16 @@ public abstract class EntryPoint {
 		return _patterns;
 	}
 
-	public String getEpVariable(){
-		return _epVariable;
+	public String getVariable(){
+		return _varible;
 	}
 
 	protected String getEpPattern(){
 		return _epPattern;
 	}
 
-	protected String getEpElement(){
-		return _epElement;
+	public String getEntryPoint(){
+		return _entryPoint;
 	}
 
 	public final Boolean isEntryPoint(){
@@ -40,12 +40,12 @@ public abstract class EntryPoint {
 		else return true;
 	}
 	
-	protected void setEpElement(String epElement){
-		_epElement = epElement;
+	protected void setEntryPoint(String ep){
+		_entryPoint = ep;
 	}
 
-	protected void setEpVariable(String epVariable){
-		_epVariable = epVariable;
+	protected void setVariable(String variable){
+		_varible = variable;
 	}
 
 	protected void setEpPattern(String epPattern){
@@ -54,8 +54,4 @@ public abstract class EntryPoint {
 
 
 	protected abstract void parseEntryPoint();
-
-	public final String toString(){
-		return "Variable " + getEpVariable() + " & Pattern " + getEpPattern();
-	}
 }

@@ -39,4 +39,8 @@
 			<sanitization>mysqli_stmt_bind_param</sanitization> 
 		</sink>					
 	</Sinks>
+	<Validations>
+		<val type="mysql_escape_string"></val>
+		<val type="mysql_real_escape_string"></val>	
+	</Validations>
 </SQLI>
