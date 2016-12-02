@@ -13,9 +13,9 @@ public class SQLIEntryPoint extends EntryPoint {
 	protected void parseEntryPoint() {
 		
 		try{
-			String[] parsed = getInputText().split("=", 2);
+			String[] parsed = getCodeSlice().split("=", 2);
 			setVariable(parsed[0]);
-			setEntryPoint(parsed[1].replace(";", ""));
+			setEntryPointValue(parsed[1].replace(";", ""));
 			Pattern pattern = Pattern.compile(getPatterns());
 
 			Matcher matcher = pattern.matcher(parsed[1]);

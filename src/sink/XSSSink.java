@@ -12,8 +12,11 @@ public class XSSSink extends Sink{
 
 	@Override
 	protected void parseSink() {
+		String[] parser = getCodeSlice().split(" ", 2);
+		setFirstArgument(parser[1]);
+		
 		Pattern pattern = Pattern.compile(getPatterns());
-		Matcher matcher = pattern.matcher(getInputText());
+		Matcher matcher = pattern.matcher(parser[0]);
 
 		if(matcher.find())
 			setSinkPattern(matcher.group());

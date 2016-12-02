@@ -14,9 +14,9 @@
 	</EntryPoints>
 	<Sinks>
 		<sink type="echo">
+			<sanitization>htmlspecialchars</sanitization> 
 			<sanitization>san_out</sanitization>
 			<sanitization>htmlentities</sanitization> 
-			<sanitization>htmlspecialchars</sanitization> 
 			<sanitization>strip_tags</sanitization> 
 			<sanitization>urlencode</sanitization> 
 		</sink>

@@ -12,15 +12,15 @@ public class SQLISink extends Sink{
 	@Override
 	protected void parseSink() {
 		Pattern r = Pattern.compile("\\((.*?)\\)");
-		Matcher m = r.matcher(getInputText());
+		Matcher m = r.matcher(getCodeSlice());
 
 		if(m.find()){
 			String[] aux = m.group(1).split(",", 2);
-			setPossibleEP(aux[0]);
+			setFirstArgument(aux[0]);
 		}
 
 		Pattern pattern = Pattern.compile(getPatterns());
-		Matcher matcher = pattern.matcher(getInputText());
+		Matcher matcher = pattern.matcher(getCodeSlice());
 
 		if(matcher.find())
 			setSinkPattern(matcher.group());

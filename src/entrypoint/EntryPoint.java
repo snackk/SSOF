@@ -1,21 +1,25 @@
 package entrypoint;
 
 public abstract class EntryPoint {
-	private String _inputText;
+	private String _codeSlice;
 	private String _patterns;
-	private String _varible;
-	private String _entryPoint;	
+	
 	private String _epPattern;
+	private String _entryPointValue;	
+	
+	private String _varible;
+	
 
-	protected EntryPoint(String inputText, String patterns){
-		_inputText = inputText;
+
+	protected EntryPoint(String codeSlice, String patterns){
+		_codeSlice = codeSlice;
 		_patterns = patterns;
 		parseEntryPoint();
 	}
 
 
-	public String getInputText(){
-		return _inputText;
+	public String getCodeSlice(){
+		return _codeSlice;
 	}
 
 	protected String getPatterns(){
@@ -30,18 +34,20 @@ public abstract class EntryPoint {
 		return _epPattern;
 	}
 
-	public String getEntryPoint(){
-		return _entryPoint;
+	public String getEntryPointValue(){
+		return _entryPointValue;
 	}
 
+	
 	public final Boolean isEntryPoint(){
 		if(getEpPattern() == null)	
 			return false;
 		else return true;
 	}
 	
-	protected void setEntryPoint(String ep){
-		_entryPoint = ep;
+	
+	protected void setEntryPointValue(String ep){
+		_entryPointValue = ep;
 	}
 
 	public void setVariable(String variable){

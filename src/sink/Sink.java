@@ -1,13 +1,13 @@
 package sink;
 
 public abstract class Sink {
-	private String _inputText;
+	private String _codeSlice;
 	private String _patterns;
 	private String _sinkPattern;
 	private String _firstArgument;
 
-	protected Sink(String inputText, String patterns){
-		_inputText = inputText;
+	protected Sink(String codeSlice, String patterns){
+		_codeSlice = codeSlice;
 		_patterns = patterns;
 		parseSink();
 	}
@@ -22,8 +22,8 @@ public abstract class Sink {
 		return _firstArgument;
 	}
 
-	protected String getInputText(){
-		return _inputText;
+	protected String getCodeSlice(){
+		return _codeSlice;
 	}
 
 	protected String getPatterns(){
@@ -35,7 +35,7 @@ public abstract class Sink {
 	}
 
 
-	public void setPossibleEP(String firstArgument){
+	public void setFirstArgument(String firstArgument){
 		_firstArgument = firstArgument;
 	}
 

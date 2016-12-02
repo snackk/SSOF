@@ -13,14 +13,27 @@ public class XSSEntryPoint extends EntryPoint {
 	protected void parseEntryPoint() {
 		
 		try{
+			String[] parser = null;
+			
+			if(getCodeSlice().contains("=")){
+				parser = getCodeSlice().split("=", 2);
+				setVariable(parser[0]);
+
+			}else{
+				if(getCodeSlice().contains(" ")){
+					parser = getCodeSlice().split(" ", 2);
+				}
+			}
+			setEntryPointValue(parser[1]);
+
 			Pattern pattern = Pattern.compile(getPatterns());
 
-			Matcher matcher = pattern.matcher(getInputText());
+			Matcher matcher = pattern.matcher(parser[1]);
 	
 			if(matcher.find())
 				setEpPattern(matcher.group());
 			
-		}catch(ArrayIndexOutOfBoundsException e){
+		}catch(Exception e){
 		
 		}
 	}
